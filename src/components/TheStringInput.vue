@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-text-field
+      v-model="innerValue"
       solo
       label="The string input"
       clearable
@@ -15,7 +16,25 @@
 export default {
   name: 'TheStringInput',
 
+  props: {
+    value: {
+      type: String,
+      required: false
+    }
+  },
+
   data: () => ({
-  })
+  }),
+
+  computed: {
+    innerValue: {
+      get () {
+        return this.value
+      },
+      set (val) {
+        this.$emit('input', val)
+      }
+    }
+  }
 }
 </script>

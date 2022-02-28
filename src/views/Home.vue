@@ -1,8 +1,24 @@
 <template>
   <div>
     <TheCanvas />
-    <TheNumberInput />
-    <TheStringInput />
+    <TheNumberInput
+      v-model="theNumber"
+    />
+    <TheStringInput
+      v-model="theString"
+    />
+    <v-btn
+      class="mx-2"
+      fab
+      dark
+      large
+      color="success"
+      @click="onClickButton"
+    >
+      <v-icon dark>
+        mdi-pencil
+      </v-icon>
+    </v-btn>
   </div>
 </template>
 
@@ -18,6 +34,20 @@ export default {
     TheCanvas,
     TheNumberInput,
     TheStringInput
+  },
+
+  data: () => ({
+    theNumber: undefined,
+    theString: undefined
+  }),
+
+  methods: {
+    onClickButton: function () {
+      console.info({
+        theNumber: this.theNumber,
+        theString: this.theString
+      })
+    }
   }
 }
 </script>
