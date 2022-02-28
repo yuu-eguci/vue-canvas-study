@@ -1,15 +1,23 @@
 <template>
-  <hello-world />
+  <div>
+    <TheCanvas />
+    <TheNumberInput />
+    <TheStringInput />
+  </div>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld'
+import TheCanvas from '../components/TheCanvas'
+import TheNumberInput from '../components/TheNumberInput'
+import TheStringInput from '../components/TheStringInput'
 
 export default {
   name: 'Home',
 
   components: {
-    HelloWorld
+    TheCanvas,
+    TheNumberInput,
+    TheStringInput
   }
 }
 </script>
