@@ -22,7 +22,6 @@
         >
           <v-col
             cols="6"
-            md="3"
           >
             <v-btn
               block
@@ -35,7 +34,6 @@
           </v-col>
           <v-col
             cols="6"
-            md="3"
           >
             <v-btn
               block
@@ -48,7 +46,6 @@
           </v-col>
           <v-col
             cols="6"
-            md="3"
           >
             <v-btn
               block
@@ -60,7 +57,6 @@
           </v-col>
           <v-col
             cols="6"
-            md="3"
           >
             <v-btn
               block
