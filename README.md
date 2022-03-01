@@ -1,24 +1,10 @@
 # vue-canvas-study
 
-## Project setup
-```
-yarn install
-```
+![readme](https://user-images.githubusercontent.com/28250432/156100825-3b508633-b26a-47d3-9fc2-992f5e06d90e.png)
 
-### Compiles and hot-reloads for development
-```
+## Project setup
+
+```bash
+yarn install
 yarn serve
 ```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
