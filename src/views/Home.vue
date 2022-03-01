@@ -1,13 +1,25 @@
 <template>
-  <div>
-    <TheCanvas />
-    <TheNumberInput
-      v-model="theNumber"
-    />
-    <TheStringInput
-      v-model="theString"
-    />
-  </div>
+  <v-container>
+    <v-row no-gutters>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <TheCanvas />
+      </v-col>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <TheNumberInput
+          v-model="theNumber"
+        />
+        <TheStringInput
+          v-model="theString"
+        />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
