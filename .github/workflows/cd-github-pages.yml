@@ -1,0 +1,40 @@
+# GitHub Pages へのデプロイを行います。
+name: cd-github-pages
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+
+  deploy-to-github-pages:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+        # NOTE: cache option を使いません。
+        #       actions/cache@v2 で node_modules をキャッシュしたほうが yarn install が高速で終わるためです。
+
+    - uses: actions/cache@v2
+      id: node_modules_cache_id
+      with:
+        path: |
+          node_modules
+        key: node-v16.x-deps-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
+
+    - run: yarn install
+
+    - run: yarn build
+
+    - uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.PERSONAL_TOKEN }}
+        publish_dir: ./dist
+        # NOTE: カスタムドメインが導入されることがあればここに cname が設定されます。
