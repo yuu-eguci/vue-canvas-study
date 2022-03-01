@@ -17,7 +17,9 @@
             height="200"
           />
         </div>
-        <div>
+        <div
+          class="mt-2"
+        >
           <v-btn
             class="mx-2"
             color="success"

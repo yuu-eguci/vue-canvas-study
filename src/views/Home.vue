@@ -16,9 +16,12 @@
             Vue-Canvas-Study
             <v-btn
               class="ms-2"
+              elevation="2"
               fab
-              small
+              x-small
               color="teal"
+              href="https://github.com/yuu-eguci/vue-canvas-study"
+              target="_blank"
             >
               <v-icon>
                 mdi-github
