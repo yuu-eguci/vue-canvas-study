@@ -11,10 +11,10 @@
         <div>
           <VueDrawingCanvas
             ref="VueCanvasDrawing"
-            width="700"
-            height="400"
             :eraser="eraser"
             background-color="#fffaeb"
+            width="300"
+            height="200"
           />
         </div>
         <div>
@@ -69,6 +69,9 @@ export default {
   data: () => ({
     eraser: false
   }),
+
+  mounted: function () {
+  },
 
   methods: {
     downloadCanvas: function () {
