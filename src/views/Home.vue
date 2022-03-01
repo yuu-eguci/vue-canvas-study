@@ -3,6 +3,32 @@
     <v-row no-gutters>
       <v-col
         cols="12"
+      >
+        <v-alert
+          dense
+          text
+          type="success"
+        >
+          <div>
+            Vue.js + Vuetify + Canvas + GitHub Pages
+          </div>
+          <h1>
+            Vue-Canvas-Study
+            <v-btn
+              class="ms-2"
+              fab
+              small
+              color="teal"
+            >
+              <v-icon>
+                mdi-github
+              </v-icon>
+            </v-btn>
+          </h1>
+        </v-alert>
+      </v-col>
+      <v-col
+        cols="12"
         md="6"
       >
         <TheCanvas />
