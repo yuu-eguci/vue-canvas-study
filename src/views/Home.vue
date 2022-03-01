@@ -11,9 +11,6 @@
         >
           <div>
             Vue.js + Vuetify + Canvas + GitHub Pages
-          </div>
-          <h1>
-            Vue-Canvas-Study
             <v-btn
               class="ms-2"
               elevation="2"
@@ -27,6 +24,9 @@
                 mdi-github
               </v-icon>
             </v-btn>
+          </div>
+          <h1>
+            Vue-Canvas-Study
           </h1>
         </v-alert>
       </v-col>

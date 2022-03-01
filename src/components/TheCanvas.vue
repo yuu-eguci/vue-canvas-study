@@ -17,42 +17,59 @@
             height="200"
           />
         </div>
-        <div
+        <v-row
           class="mt-2"
         >
-          <v-btn
-            class="mx-2"
-            color="success"
-            :disabled="!eraser"
-            @click="() => { eraser = false }"
+          <v-col
+            cols="6"
+            md="3"
           >
-            Draw
-          </v-btn>
-
-          <v-btn
-            class="mx-2"
-            color="warning"
-            :disabled="eraser"
-            @click="() => { eraser = true }"
+            <v-btn
+              block
+              color="success"
+              :disabled="!eraser"
+              @click="() => { eraser = false }"
+            >
+              Draw
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="6"
+            md="3"
           >
-            Eraser
-          </v-btn>
-
-          <v-btn
-            class="mx-2"
-            color="error"
-            @click.prevent="$refs.VueCanvasDrawing.reset()"
+            <v-btn
+              block
+              color="warning"
+              :disabled="eraser"
+              @click="() => { eraser = true }"
+            >
+              Eraser
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="6"
+            md="3"
           >
-            Reset
-          </v-btn>
-
-          <v-btn
-            class="mx-2"
-            @click="downloadCanvas"
+            <v-btn
+              block
+              color="error"
+              @click.prevent="$refs.VueCanvasDrawing.reset()"
+            >
+              Reset
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="6"
+            md="3"
           >
-            Download
-          </v-btn>
-        </div>
+            <v-btn
+              block
+              @click="downloadCanvas"
+            >
+              Download
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-card-text>
     </v-card>
   </v-container>
