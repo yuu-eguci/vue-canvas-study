@@ -7,18 +7,6 @@
     <TheStringInput
       v-model="theString"
     />
-    <v-btn
-      class="mx-2"
-      fab
-      dark
-      large
-      color="success"
-      @click="onClickButton"
-    >
-      <v-icon dark>
-        mdi-pencil
-      </v-icon>
-    </v-btn>
   </div>
 </template>
 
@@ -42,12 +30,6 @@ export default {
   }),
 
   methods: {
-    onClickButton: function () {
-      console.info({
-        theNumber: this.theNumber,
-        theString: this.theString
-      })
-    }
   }
 }
 </script>
