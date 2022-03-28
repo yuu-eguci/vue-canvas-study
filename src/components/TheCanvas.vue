@@ -15,8 +15,11 @@
             background-color="#fffaeb"
             width="300"
             height="200"
+            :background-image="backgroundImage"
           />
         </div>
+      </v-card-text>
+      <v-card-text>
         <v-row
           class="mt-2"
         >
@@ -50,7 +53,7 @@
             <v-btn
               block
               color="error"
-              @click.prevent="$refs.VueCanvasDrawing.reset()"
+              @click.prevent="onClickResetCanvas"
             >
               Reset
             </v-btn>
@@ -63,6 +66,30 @@
               @click="downloadCanvas"
             >
               Download
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="6"
+          >
+            <v-btn
+              block
+              @click="onClickSetImageA"
+              dark
+              color="teal"
+            >
+              Set image A
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="6"
+          >
+            <v-btn
+              block
+              @click="onClickSetImageB"
+              dark
+              color="teal"
+            >
+              Set image B
             </v-btn>
           </v-col>
         </v-row>
@@ -82,7 +109,8 @@ export default {
   },
 
   data: () => ({
-    eraser: false
+    eraser: false,
+    backgroundImage: null
   }),
 
   mounted: function () {
@@ -96,6 +124,21 @@ export default {
       link.href = base64
       link.download = 'download'
       link.click()
+    },
+
+    onClickResetCanvas: function () {
+      this.backgroundImage = null
+      this.$refs.VueCanvasDrawing.reset()
+    },
+
+    onClickSetImageA: function () {
+      this.backgroundImage = require('@/assets/penta.png')
+      this.$refs.VueCanvasDrawing.redraw()
+    },
+
+    onClickSetImageB: function () {
+      this.backgroundImage = require('@/assets/hexa.png')
+      this.$refs.VueCanvasDrawing.redraw()
     }
   }
 }
