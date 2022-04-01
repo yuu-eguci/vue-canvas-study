@@ -46,6 +46,9 @@
         <TheStringInput
           v-model="theString"
         />
+        <v-btn @click="onClickConsoleLogButton">
+          Console.log the number and the string
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -71,6 +74,12 @@ export default {
   }),
 
   methods: {
+    onClickConsoleLogButton () {
+      console.info({
+        theNumber: this.theNumber,
+        theString: this.theString
+      })
+    }
   }
 }
 </script>
