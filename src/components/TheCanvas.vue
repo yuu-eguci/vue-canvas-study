@@ -53,6 +53,26 @@
           >
             <v-btn
               block
+              @click="$refs.VueCanvasDrawing.undo()"
+            >
+              Undo
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="6"
+          >
+            <v-btn
+              block
+              @click="$refs.VueCanvasDrawing.redo()"
+            >
+              Redo
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="6"
+          >
+            <v-btn
+              block
               color="error"
               @click.prevent="onClickResetCanvas"
             >
