@@ -1,11 +1,12 @@
 # GitHub Pages へのデプロイを行います。
 name: cd-github-pages
 
+# NOTE: main への push では動きません。 Actions 画面から手動で実行します。
 on:
-  push:
-    branches: [ main ]
-
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
 
@@ -35,6 +36,6 @@ jobs:
 
     - uses: peaceiris/actions-gh-pages@v3
       with:
-        personal_token: ${{ secrets.PERSONAL_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
         # NOTE: カスタムドメインが導入されることがあればここに cname が設定されます。
