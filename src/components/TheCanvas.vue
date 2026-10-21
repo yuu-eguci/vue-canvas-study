@@ -2,7 +2,6 @@
   <v-container>
     <v-card
       elevation="2"
-      class="p-3"
     >
       <v-card-title>
         The handwriting
