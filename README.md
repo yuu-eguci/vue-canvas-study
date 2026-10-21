@@ -17,7 +17,7 @@ Vue.js + Vuetify + Canvas の手書き練習。 GitHub Pages で公開してる�
 ## パッと実行してみたい
 
 ```bash
-docker compose up --build
+docker compose up --build --renew-anon-volumes
 # http://localhost:5173/vue-canvas-study/
 ```
 
