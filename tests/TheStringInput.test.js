@@ -13,4 +13,11 @@ describe('TheStringInput', () => {
     const wrapper = mount(TheStringInput)
     expect(wrapper.find('input').attributes('maxlength')).toBe('20')
   })
+
+  it('フォーカスしていなくても文字数カウンタを表示します', () => {
+    const wrapper = mount(TheStringInput, { props: { modelValue: 'abc' } })
+    const counter = wrapper.find('.v-counter')
+    expect(counter.isVisible()).toBe(true)
+    expect(counter.text()).toBe('3 / 20')
+  })
 })

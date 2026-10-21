@@ -7,6 +7,7 @@
       clearable
       type="text"
       counter
+      persistent-counter
       maxlength="20"
     />
   </v-container>
