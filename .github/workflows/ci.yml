@@ -30,3 +30,19 @@ jobs:
     - run: npm test
 
     - run: npm run build
+
+  docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - run: docker compose build
+
+    # NOTE: README の手順どおり compose 経由で lint 、 test 、 build が通ることを確認します。
+    - run: docker compose run --rm app npm run lint
+
+    - run: docker compose run --rm app npm test
+
+    - run: docker compose run --rm app npm run build

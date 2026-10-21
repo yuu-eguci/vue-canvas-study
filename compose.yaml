@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      # NOTE: ホストの node_modules で上書きしないよう、コンテナ側の node_modules を残します。
+      - /app/node_modules
