@@ -2,11 +2,11 @@
   <v-container>
     <v-text-field
       v-model="innerValue"
-      solo
+      variant="solo"
       label="The number input"
       clearable
       type="number"
-    ></v-text-field>
+    />
   </v-container>
 </template>
 
@@ -15,22 +15,22 @@ export default {
   name: 'TheNumberInput',
 
   props: {
-    value: {
+    modelValue: {
       type: Number,
-      required: false
+      default: null
     }
   },
 
-  data: () => ({
-  }),
+  emits: ['update:modelValue'],
 
   computed: {
     innerValue: {
       get () {
-        return this.value
+        return this.modelValue
       },
       set (val) {
-        this.$emit('input', Number(val))
+        // 空欄や clear のときは 0 ではなく null を返します。
+        this.$emit('update:modelValue', val === '' || val === null ? null : Number(val))
       }
     }
   }

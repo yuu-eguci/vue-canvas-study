@@ -5,8 +5,8 @@
         cols="12"
       >
         <v-alert
-          dense
-          text
+          density="compact"
+          variant="tonal"
           type="success"
         >
           <div>
@@ -14,8 +14,8 @@
             <v-btn
               class="ms-2"
               elevation="2"
-              fab
-              x-small
+              icon
+              size="x-small"
               color="teal"
               href="https://github.com/yuu-eguci/vue-canvas-study"
               target="_blank"
@@ -55,12 +55,12 @@
 </template>
 
 <script>
-import TheCanvas from '../components/TheCanvas'
-import TheNumberInput from '../components/TheNumberInput'
-import TheStringInput from '../components/TheStringInput'
+import TheCanvas from '../components/TheCanvas.vue'
+import TheNumberInput from '../components/TheNumberInput.vue'
+import TheStringInput from '../components/TheStringInput.vue'
 
 export default {
-  name: 'Home',
+  name: 'HomeView',
 
   components: {
     TheCanvas,

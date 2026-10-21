@@ -13,8 +13,8 @@
             ref="VueCanvasDrawing"
             :eraser="eraser"
             background-color="#fffaeb"
-            width="300"
-            height="200"
+            :width="300"
+            :height="200"
             :background-image="backgroundImage"
           />
         </div>
@@ -73,9 +73,8 @@
           >
             <v-btn
               block
-              @click="onClickSetImageA"
-              dark
               color="teal"
+              @click="onClickSetImageA"
             >
               Set image A
             </v-btn>
@@ -85,9 +84,8 @@
           >
             <v-btn
               block
-              @click="onClickSetImageB"
-              dark
               color="teal"
+              @click="onClickSetImageB"
             >
               Set image B
             </v-btn>
@@ -100,6 +98,8 @@
 
 <script>
 import VueDrawingCanvas from 'vue-drawing-canvas'
+import imageA from '@/assets/penta.png'
+import imageB from '@/assets/hexa.png'
 
 export default {
   name: 'TheCanvas',
@@ -112,9 +112,6 @@ export default {
     eraser: false,
     backgroundImage: null
   }),
-
-  mounted: function () {
-  },
 
   methods: {
     downloadCanvas: function () {
@@ -132,12 +129,12 @@ export default {
     },
 
     onClickSetImageA: function () {
-      this.backgroundImage = require('@/assets/penta.png')
+      this.backgroundImage = imageA
       this.$refs.VueCanvasDrawing.redraw()
     },
 
     onClickSetImageB: function () {
-      this.backgroundImage = require('@/assets/hexa.png')
+      this.backgroundImage = imageB
       this.$refs.VueCanvasDrawing.redraw()
     }
   }
