@@ -6,4 +6,5 @@ services:
     volumes:
       - .:/app
       # NOTE: ホストの node_modules で上書きしないよう、コンテナ側の node_modules を残します。
+      #       up では前回の volume が引き継がれるため、 --renew-anon-volumes で image の node_modules に戻します。
       - /app/node_modules
