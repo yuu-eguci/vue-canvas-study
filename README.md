@@ -8,3 +8,9 @@
 yarn install
 yarn serve
 ```
+
+## GitHub Pages へのデプロイ
+
+- main に push しても deploy されない
+- Actions の `cd-github-pages` を手動で実行すると gh-pages ブランチへ deploy される
+- 公開先: https://yuu-eguci.github.io/vue-canvas-study/
