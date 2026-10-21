@@ -8,6 +8,7 @@
           density="compact"
           variant="tonal"
           type="success"
+          color="green-darken-4"
         >
           <div>
             Vue.js + Vuetify + Canvas + GitHub Pages
