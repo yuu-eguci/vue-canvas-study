@@ -26,4 +26,13 @@ describe('HomeView', () => {
     const link = wrapper.find('a[href="https://github.com/yuu-eguci/vue-canvas-study"]')
     expect(link.find('svg path').attributes('d')).toBe(mdiGithub)
   })
+  it('GitHub リンクに名前をつけ、別タブを noopener で開きます', () => {
+    const wrapper = mount(HomeView, {
+      global: { stubs: { TheCanvas: true } }
+    })
+    const link = wrapper.find('a[href="https://github.com/yuu-eguci/vue-canvas-study"]')
+    expect(link.attributes('aria-label')).toBe('GitHub repository')
+    expect(link.attributes('target')).toBe('_blank')
+    expect(link.attributes('rel')).toBe('noopener noreferrer')
+  })
 })
