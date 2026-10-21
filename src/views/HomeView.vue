@@ -19,6 +19,8 @@
               color="teal"
               href="https://github.com/yuu-eguci/vue-canvas-study"
               target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub repository"
             >
               <v-icon :icon="mdiGithub" />
             </v-btn>
