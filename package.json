@@ -6,6 +6,9 @@
   "engines": {
     "node": ">=24"
   },
+  "volta": {
+    "node": "24.22.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
