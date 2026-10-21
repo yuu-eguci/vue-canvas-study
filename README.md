@@ -10,6 +10,7 @@ Vue.js + Vuetify + Canvas の手書き練習。 GitHub Pages で公開してる�
 - Vue: 3.5!
 - Vuetify: 4.3!
 - vue-drawing-canvas: 1.0!
+- アイコン: @mdi/js (SVG)!
 
 ![readme](https://user-images.githubusercontent.com/28250432/156100825-3b508633-b26a-47d3-9fc2-992f5e06d90e.png)
 

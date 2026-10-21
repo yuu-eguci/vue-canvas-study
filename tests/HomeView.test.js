@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { mdiGithub } from '@mdi/js'
 import HomeView from '../src/views/HomeView.vue'
 
 describe('HomeView', () => {
@@ -16,5 +17,13 @@ describe('HomeView', () => {
 
     expect(info).toHaveBeenCalledWith({ theNumber: 3, theString: 'abc' })
     info.mockRestore()
+  })
+
+  it('GitHub アイコンをフォントではなく SVG で表示します', () => {
+    const wrapper = mount(HomeView, {
+      global: { stubs: { TheCanvas: true } }
+    })
+    const link = wrapper.find('a[href="https://github.com/yuu-eguci/vue-canvas-study"]')
+    expect(link.find('svg path').attributes('d')).toBe(mdiGithub)
   })
 })

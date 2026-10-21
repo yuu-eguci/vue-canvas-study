@@ -20,9 +20,7 @@
               href="https://github.com/yuu-eguci/vue-canvas-study"
               target="_blank"
             >
-              <v-icon>
-                mdi-github
-              </v-icon>
+              <v-icon :icon="mdiGithub" />
             </v-btn>
           </div>
           <h1>
@@ -55,6 +53,7 @@
 </template>
 
 <script>
+import { mdiGithub } from '@mdi/js'
 import TheCanvas from '../components/TheCanvas.vue'
 import TheNumberInput from '../components/TheNumberInput.vue'
 import TheStringInput from '../components/TheStringInput.vue'
@@ -69,6 +68,7 @@ export default {
   },
 
   data: () => ({
+    mdiGithub,
     theNumber: undefined,
     theString: undefined
   }),
