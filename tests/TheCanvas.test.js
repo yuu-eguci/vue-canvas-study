@@ -30,6 +30,7 @@ const mockClientWidth = (width) => vi.spyOn(HTMLElement.prototype, 'clientWidth'
 
 describe('TheCanvas', () => {
   beforeEach(() => {
+    vi.clearAllMocks()
     mockClientWidth(500)
   })
 
@@ -72,6 +73,45 @@ describe('TheCanvas', () => {
 
     await findButton(wrapper, 'Redo').trigger('click')
     expect(VueDrawingCanvasStub.methods.redo).toHaveBeenCalledOnce()
+  })
+
+  it('Ctrl / Cmd + Z で Undo 、 Ctrl + Y や Ctrl / Cmd + Shift + Z で Redo します', async () => {
+    await mountCanvas()
+    const { undo, redo } = VueDrawingCanvasStub.methods
+
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true }))
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', metaKey: true, bubbles: true }))
+    expect(undo).toHaveBeenCalledTimes(2)
+
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'y', ctrlKey: true, bubbles: true }))
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Z', metaKey: true, shiftKey: true, bubbles: true }))
+    expect(redo).toHaveBeenCalledTimes(2)
+    expect(undo).toHaveBeenCalledTimes(2)
+  })
+
+  it('修飾キーなしや入力欄の中では Undo / Redo しません', async () => {
+    await mountCanvas()
+    const input = document.createElement('input')
+    document.body.appendChild(input)
+
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', bubbles: true }))
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true }))
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'y', ctrlKey: true, bubbles: true }))
+
+    expect(VueDrawingCanvasStub.methods.undo).not.toHaveBeenCalled()
+    expect(VueDrawingCanvasStub.methods.redo).not.toHaveBeenCalled()
+    input.remove()
+  })
+
+  it('unmount するときに keydown の listener を外します', async () => {
+    const add = vi.spyOn(window, 'addEventListener')
+    const remove = vi.spyOn(window, 'removeEventListener')
+    const wrapper = await mountCanvas()
+    const [, handler] = add.mock.calls.find(([type]) => type === 'keydown')
+
+    wrapper.unmount()
+
+    expect(remove).toHaveBeenCalledWith('keydown', handler)
   })
 
   it('Set image で背景画像を設定し、 Reset で消します', async () => {

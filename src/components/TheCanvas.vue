@@ -146,6 +146,11 @@ export default {
 
   mounted () {
     this.canvasWidth = Math.min(MAX_CANVAS_WIDTH, this.$refs.canvasWrapper.clientWidth)
+    window.addEventListener('keydown', this.onKeydown)
+  },
+
+  beforeUnmount () {
+    window.removeEventListener('keydown', this.onKeydown)
   },
 
   methods: {
@@ -156,6 +161,22 @@ export default {
       link.href = base64
       link.download = 'vue-canvas-study.jpg'
       link.click()
+    },
+
+    onKeydown (event) {
+      // 入力欄では、入力欄自身の Undo / Redo を優先します。
+      if (!(event.ctrlKey || event.metaKey) || event.target.closest?.('input, textarea')) {
+        return
+      }
+      const key = event.key.toLowerCase()
+      if (key === 'z' && !event.shiftKey) {
+        this.$refs.VueCanvasDrawing.undo()
+      } else if (key === 'y' || (key === 'z' && event.shiftKey)) {
+        this.$refs.VueCanvasDrawing.redo()
+      } else {
+        return
+      }
+      event.preventDefault()
     },
 
     onClickResetCanvas: function () {

@@ -26,6 +26,7 @@ docker compose up --build
 - canvas に手書きする。幅が 300px より狭い画面では 3:2 のまま縮む
 - Draw / Eraser: ペンと消しゴムを切り替える
 - Undo / Redo: 直前の線を戻す、やり直す
+    - キーボードなら Ctrl (Mac は Cmd) + Z で Undo 、 Ctrl+Y か Ctrl+Shift+Z で Redo 。入力欄にいるときは入力欄の Undo になる
 - Reset: 線と背景画像を全部消す
 - Download: canvas を JPEG で保存する
 - Set image A / B: 背景に五角形 / 六角形のガイド画像を敷く
