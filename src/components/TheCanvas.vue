@@ -29,7 +29,7 @@
           >
             <v-btn
               block
-              color="success"
+              color="green-darken-3"
               :disabled="!eraser"
               @click="() => { eraser = false }"
             >
@@ -41,7 +41,7 @@
           >
             <v-btn
               block
-              color="warning"
+              color="deep-orange-darken-4"
               :disabled="eraser"
               @click="() => { eraser = true }"
             >
@@ -94,7 +94,7 @@
           >
             <v-btn
               block
-              color="teal"
+              color="teal-darken-2"
               @click="onClickSetImageA"
             >
               Set image A
@@ -105,7 +105,7 @@
           >
             <v-btn
               block
-              color="teal"
+              color="teal-darken-2"
               @click="onClickSetImageB"
             >
               Set image B
