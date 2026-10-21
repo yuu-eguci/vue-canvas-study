@@ -171,7 +171,7 @@ export default {
       const key = event.key.toLowerCase()
       if (key === 'z' && !event.shiftKey) {
         this.$refs.VueCanvasDrawing.undo()
-      } else if (key === 'y' || (key === 'z' && event.shiftKey)) {
+      } else if ((key === 'y' && event.ctrlKey) || (key === 'z' && event.shiftKey)) {
         this.$refs.VueCanvasDrawing.redo()
       } else {
         return

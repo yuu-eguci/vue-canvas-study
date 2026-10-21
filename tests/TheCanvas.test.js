@@ -89,7 +89,7 @@ describe('TheCanvas', () => {
     expect(undo).toHaveBeenCalledTimes(2)
   })
 
-  it('修飾キーなしや入力欄の中では Undo / Redo しません', async () => {
+  it('修飾キーなし、入力欄の中、 Cmd + Y では Undo / Redo しません', async () => {
     await mountCanvas()
     const input = document.createElement('input')
     document.body.appendChild(input)
@@ -97,6 +97,10 @@ describe('TheCanvas', () => {
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', bubbles: true }))
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true }))
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'y', ctrlKey: true, bubbles: true }))
+    // Mac の Cmd + Y はブラウザの履歴なので奪いません。
+    const cmdY = new KeyboardEvent('keydown', { key: 'y', metaKey: true, bubbles: true, cancelable: true })
+    document.body.dispatchEvent(cmdY)
+    expect(cmdY.defaultPrevented).toBe(false)
 
     expect(VueDrawingCanvasStub.methods.undo).not.toHaveBeenCalled()
     expect(VueDrawingCanvasStub.methods.redo).not.toHaveBeenCalled()
