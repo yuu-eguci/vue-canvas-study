@@ -21,6 +21,16 @@ docker compose up --build
 # http://localhost:5173/vue-canvas-study/
 ```
 
+## できること
+
+- canvas に手書きする。幅が 300px より狭い画面では 3:2 のまま縮む
+- Draw / Eraser: ペンと消しゴムを切り替える
+- Undo / Redo: 直前の線を戻す、やり直す
+- Reset: 線と背景画像を全部消す
+- Download: canvas を JPEG で保存する
+- Set image A / B: 背景に五角形 / 六角形のガイド画像を敷く
+- 数値と文字列 (20 文字まで) を入力して、ボタンで console.info に出す
+
 ## 開発コマンド
 
 ```bash
@@ -30,7 +40,6 @@ docker compose run --rm app npm run build
 ```
 
 - Node.js 24 が手元にあれば `npm ci` してから `npm run dev` などを直接実行してもいい
-
 - PR と main への push で GitHub Actions の `ci` が lint 、 test 、 build を実行する
 
 ## GitHub Pages へのデプロイ
