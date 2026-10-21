@@ -122,11 +122,14 @@ describe('TheCanvas', () => {
     const wrapper = await mountCanvas()
     const canvas = wrapper.findComponent({ name: 'VueDrawingCanvas' })
 
+    // ライブラリは backgroundImage が変わっても描き直さないため、 redraw を呼ぶ必要があります。
     await findButton(wrapper, 'Set image A').trigger('click')
     expect(canvas.props('backgroundImage')).toMatch(/penta.*\.png/)
+    expect(VueDrawingCanvasStub.methods.redraw).toHaveBeenCalledTimes(1)
 
     await findButton(wrapper, 'Set image B').trigger('click')
     expect(canvas.props('backgroundImage')).toMatch(/hexa.*\.png/)
+    expect(VueDrawingCanvasStub.methods.redraw).toHaveBeenCalledTimes(2)
 
     await findButton(wrapper, 'Reset').trigger('click')
     expect(canvas.props('backgroundImage')).toBeNull()
