@@ -100,7 +100,7 @@ describe('TheCanvas', () => {
     expect(canvasElement.toDataURL).toHaveBeenCalledWith('image/jpeg')
     const link = click.mock.contexts[0]
     expect(link.href).toBe('data:image/jpeg;base64,xxx')
-    expect(link.download).toBe('download')
+    expect(link.download).toBe('vue-canvas-study.jpg')
     click.mockRestore()
   })
 })

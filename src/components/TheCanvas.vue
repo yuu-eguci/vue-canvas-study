@@ -154,7 +154,7 @@ export default {
       const base64 = canvas.toDataURL('image/jpeg')
       const link = document.createElement('a')
       link.href = base64
-      link.download = 'download'
+      link.download = 'vue-canvas-study.jpg'
       link.click()
     },
 
