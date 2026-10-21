@@ -2,13 +2,14 @@
   <v-container>
     <v-text-field
       v-model="innerValue"
-      solo
+      variant="solo"
       label="The string input"
       clearable
       type="text"
       counter
+      persistent-counter
       maxlength="20"
-    ></v-text-field>
+    />
   </v-container>
 </template>
 
@@ -17,22 +18,21 @@ export default {
   name: 'TheStringInput',
 
   props: {
-    value: {
+    modelValue: {
       type: String,
-      required: false
+      default: null
     }
   },
 
-  data: () => ({
-  }),
+  emits: ['update:modelValue'],
 
   computed: {
     innerValue: {
       get () {
-        return this.value
+        return this.modelValue
       },
       set (val) {
-        this.$emit('input', val)
+        this.$emit('update:modelValue', val)
       }
     }
   }
