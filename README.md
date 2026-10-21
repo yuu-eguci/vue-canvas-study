@@ -3,6 +3,7 @@ vue-canvas-study
 
 Vue.js + Vuetify + Canvas の手書き練習。 GitHub Pages で公開してる。
 
+- Docker: 対応!
 - Node.js: 24!
 - Linter: ESLint (neostandard + eslint-plugin-vue)!
 - Test: Vitest + @vue/test-utils!
@@ -15,18 +16,19 @@ Vue.js + Vuetify + Canvas の手書き練習。 GitHub Pages で公開してる�
 ## パッと実行してみたい
 
 ```bash
-npm ci
-npm run dev
+docker compose up --build
 # http://localhost:5173/vue-canvas-study/
 ```
 
 ## 開発コマンド
 
 ```bash
-npm run lint
-npm test
-npm run build
+docker compose run --rm app npm run lint
+docker compose run --rm app npm test
+docker compose run --rm app npm run build
 ```
+
+- Node.js 24 が手元にあれば `npm ci` してから `npm run dev` などを直接実行してもいい
 
 - PR と main への push で GitHub Actions の `ci` が lint 、 test 、 build を実行する
 
