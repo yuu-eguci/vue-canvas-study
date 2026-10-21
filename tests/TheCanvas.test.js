@@ -8,7 +8,9 @@ const VueDrawingCanvasStub = {
   template: '<canvas />',
   methods: {
     reset: vi.fn(),
-    redraw: vi.fn()
+    redraw: vi.fn(),
+    undo: vi.fn(),
+    redo: vi.fn()
   }
 }
 
@@ -60,6 +62,16 @@ describe('TheCanvas', () => {
 
     await findButton(wrapper, 'Draw').trigger('click')
     expect(canvas.props('eraser')).toBe(false)
+  })
+
+  it('Undo と Redo で直前の線を戻したりやり直したりします', async () => {
+    const wrapper = await mountCanvas()
+
+    await findButton(wrapper, 'Undo').trigger('click')
+    expect(VueDrawingCanvasStub.methods.undo).toHaveBeenCalledOnce()
+
+    await findButton(wrapper, 'Redo').trigger('click')
+    expect(VueDrawingCanvasStub.methods.redo).toHaveBeenCalledOnce()
   })
 
   it('Set image で背景画像を設定し、 Reset で消します', async () => {
