@@ -1,10 +1,10 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import TheCanvas from '../src/components/TheCanvas.vue'
 
 const VueDrawingCanvasStub = {
   name: 'VueDrawingCanvas',
-  props: ['eraser', 'backgroundImage'],
+  props: ['eraser', 'backgroundImage', 'width', 'height'],
   template: '<canvas />',
   methods: {
     reset: vi.fn(),
@@ -12,15 +12,44 @@ const VueDrawingCanvasStub = {
   }
 }
 
-const mountCanvas = () => mount(TheCanvas, {
-  global: { stubs: { VueDrawingCanvas: VueDrawingCanvasStub } }
-})
+// canvas は親の幅を測ったあとに描画されるため、再描画を待ってから返します。
+const mountCanvas = async () => {
+  const wrapper = mount(TheCanvas, {
+    global: { stubs: { VueDrawingCanvas: VueDrawingCanvasStub } }
+  })
+  await wrapper.vm.$nextTick()
+  return wrapper
+}
 
 const findButton = (wrapper, text) => wrapper.findAll('button').find(b => b.text() === text)
 
+// jsdom はレイアウトを計算しないため、 canvas の親要素の幅を差し替えます。
+const mockClientWidth = (width) => vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(width)
+
 describe('TheCanvas', () => {
+  beforeEach(() => {
+    mockClientWidth(500)
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('幅に余裕があるときは 300 x 200 で表示します', async () => {
+    const canvas = (await mountCanvas()).findComponent({ name: 'VueDrawingCanvas' })
+    expect(canvas.props('width')).toBe(300)
+    expect(canvas.props('height')).toBe(200)
+  })
+
+  it('親の幅が 300 未満のときは幅に収まるよう 3:2 で縮めます', async () => {
+    mockClientWidth(240)
+    const canvas = (await mountCanvas()).findComponent({ name: 'VueDrawingCanvas' })
+    expect(canvas.props('width')).toBe(240)
+    expect(canvas.props('height')).toBe(160)
+  })
+
   it('Eraser と Draw でモードを切り替えます', async () => {
-    const wrapper = mountCanvas()
+    const wrapper = await mountCanvas()
     const canvas = wrapper.findComponent({ name: 'VueDrawingCanvas' })
     expect(canvas.props('eraser')).toBe(false)
     expect(findButton(wrapper, 'Draw').attributes('disabled')).toBeDefined()
@@ -34,7 +63,7 @@ describe('TheCanvas', () => {
   })
 
   it('Set image で背景画像を設定し、 Reset で消します', async () => {
-    const wrapper = mountCanvas()
+    const wrapper = await mountCanvas()
     const canvas = wrapper.findComponent({ name: 'VueDrawingCanvas' })
 
     await findButton(wrapper, 'Set image A').trigger('click')
@@ -49,7 +78,7 @@ describe('TheCanvas', () => {
   })
 
   it('Download で canvas を JPEG としてダウンロードします', async () => {
-    const wrapper = mountCanvas()
+    const wrapper = await mountCanvas()
     const canvasElement = wrapper.find('canvas').element
     canvasElement.toDataURL = vi.fn(() => 'data:image/jpeg;base64,xxx')
     const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {})
