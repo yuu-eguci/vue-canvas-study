@@ -35,9 +35,9 @@ docker compose up --build --renew-anon-volumes
 ## 開発コマンド
 
 ```bash
-docker compose run --rm app npm run lint
-docker compose run --rm app npm test
-docker compose run --rm app npm run build
+docker compose run --rm --build app npm run lint
+docker compose run --rm --build app npm test
+docker compose run --rm --build app npm run build
 ```
 
 - Node.js 24 が手元にあれば `npm ci` してから `npm run dev` などを直接実行してもいい
