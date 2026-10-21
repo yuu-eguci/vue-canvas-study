@@ -12,6 +12,9 @@ jobs:
 
   deploy-to-github-pages:
 
+    # NOTE: 手動実行では branch を選べるため、 main 以外は deploy しません。
+    if: github.ref == 'refs/heads/main'
+
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +26,10 @@ jobs:
         cache: npm
 
     - run: npm ci
+
+    - run: npm run lint
+
+    - run: npm test
 
     - run: npm run build
 
