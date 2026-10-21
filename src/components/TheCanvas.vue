@@ -8,13 +8,14 @@
         The handwriting
       </v-card-title>
       <v-card-text>
-        <div>
+        <div ref="canvasWrapper">
           <VueDrawingCanvas
+            v-if="canvasWidth"
             ref="VueCanvasDrawing"
             :eraser="eraser"
             background-color="#fffaeb"
-            :width="300"
-            :height="200"
+            :width="canvasWidth"
+            :height="canvasHeight"
             :background-image="backgroundImage"
           />
         </div>
@@ -101,6 +102,9 @@ import VueDrawingCanvas from 'vue-drawing-canvas'
 import imageA from '@/assets/penta.png'
 import imageB from '@/assets/hexa.png'
 
+// vue-drawing-canvas は CSS で縮めると描画座標がずれるため、 canvas 自体のサイズを親の幅に合わせます。
+const MAX_CANVAS_WIDTH = 300
+
 export default {
   name: 'TheCanvas',
 
@@ -110,8 +114,19 @@ export default {
 
   data: () => ({
     eraser: false,
-    backgroundImage: null
+    backgroundImage: null,
+    canvasWidth: 0
   }),
+
+  computed: {
+    canvasHeight () {
+      return Math.round(this.canvasWidth * 2 / 3)
+    }
+  },
+
+  mounted () {
+    this.canvasWidth = Math.min(MAX_CANVAS_WIDTH, this.$refs.canvasWrapper.clientWidth)
+  },
 
   methods: {
     downloadCanvas: function () {
