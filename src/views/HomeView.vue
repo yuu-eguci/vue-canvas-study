@@ -55,13 +55,14 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mdiGithub } from '@mdi/js'
 import TheCanvas from '../components/TheCanvas.vue'
 import TheNumberInput from '../components/TheNumberInput.vue'
 import TheStringInput from '../components/TheStringInput.vue'
 
-export default {
+export default defineComponent({
   name: 'HomeView',
 
   components: {
@@ -72,8 +73,8 @@ export default {
 
   data: () => ({
     mdiGithub,
-    theNumber: undefined,
-    theString: undefined
+    theNumber: undefined as number | null | undefined,
+    theString: undefined as string | null | undefined
   }),
 
   methods: {
@@ -84,5 +85,5 @@ export default {
       })
     }
   }
-}
+})
 </script>

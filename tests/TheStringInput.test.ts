@@ -6,7 +6,7 @@ describe('TheStringInput', () => {
   it('入力した文字列を emit します', async () => {
     const wrapper = mount(TheStringInput)
     await wrapper.find('input').setValue('hello')
-    expect(wrapper.emitted('update:modelValue').at(-1)).toEqual(['hello'])
+    expect(wrapper.emitted('update:modelValue')!.at(-1)).toEqual(['hello'])
   })
 
   it('20 文字までに制限します', () => {

@@ -13,13 +13,15 @@
   </v-container>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, type PropType } from 'vue'
+
+export default defineComponent({
   name: 'TheStringInput',
 
   props: {
     modelValue: {
-      type: String,
+      type: String as PropType<string | null>,
       default: null
     }
   },
@@ -31,10 +33,10 @@ export default {
       get () {
         return this.modelValue
       },
-      set (val) {
+      set (val: string | null) {
         this.$emit('update:modelValue', val)
       }
     }
   }
-}
+})
 </script>

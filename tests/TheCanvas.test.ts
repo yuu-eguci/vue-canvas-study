@@ -1,10 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import TheCanvas from '../src/components/TheCanvas.vue'
 
 const VueDrawingCanvasStub = {
   name: 'VueDrawingCanvas',
-  props: ['eraser', 'backgroundImage', 'width', 'height'],
+  props: {
+    eraser: Boolean,
+    // ライブラリと同じく、渡されないときは null になります。
+    backgroundImage: { type: String, default: null },
+    width: Number,
+    height: Number
+  },
   template: '<canvas />',
   methods: {
     reset: vi.fn(),
@@ -23,10 +29,10 @@ const mountCanvas = async () => {
   return wrapper
 }
 
-const findButton = (wrapper, text) => wrapper.findAll('button').find(b => b.text() === text)
+const findButton = (wrapper: VueWrapper, text: string) => wrapper.findAll('button').find(b => b.text() === text)!
 
 // jsdom はレイアウトを計算しないため、 canvas の親要素の幅を差し替えます。
-const mockClientWidth = (width) => vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(width)
+const mockClientWidth = (width: number) => vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(width)
 
 describe('TheCanvas', () => {
   beforeEach(() => {
@@ -111,7 +117,7 @@ describe('TheCanvas', () => {
     const add = vi.spyOn(window, 'addEventListener')
     const remove = vi.spyOn(window, 'removeEventListener')
     const wrapper = await mountCanvas()
-    const [, handler] = add.mock.calls.find(([type]) => type === 'keydown')
+    const [, handler] = add.mock.calls.find(([type]) => type === 'keydown')!
 
     wrapper.unmount()
 
@@ -145,7 +151,7 @@ describe('TheCanvas', () => {
     await findButton(wrapper, 'Download').trigger('click')
 
     expect(canvasElement.toDataURL).toHaveBeenCalledWith('image/jpeg')
-    const link = click.mock.contexts[0]
+    const link = click.mock.contexts[0] as HTMLAnchorElement
     expect(link.href).toBe('data:image/jpeg;base64,xxx')
     expect(link.download).toBe('vue-canvas-study.jpg')
     click.mockRestore()

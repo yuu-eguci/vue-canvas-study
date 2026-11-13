@@ -5,6 +5,7 @@ Vue.js + Vuetify + Canvas の手書き練習。 GitHub Pages で公開してる�
 
 - Docker: 対応!
 - Node.js: 24!
+- TypeScript: 6.0 (vue-tsc でテンプレートまで型検査)!
 - Linter: ESLint (neostandard + eslint-plugin-vue)!
 - Test: Vitest + @vue/test-utils!
 - Vue: 3.5!
@@ -36,12 +37,15 @@ docker compose up --build --renew-anon-volumes
 
 ```bash
 docker compose run --rm --build app npm run lint
+docker compose run --rm --build app npm run typecheck
 docker compose run --rm --build app npm test
 docker compose run --rm --build app npm run build
 ```
 
 - Node.js 24 が手元にあれば `npm ci` してから `npm run dev` などを直接実行してもいい
-- PR と main への push で GitHub Actions の `ci` が lint 、 test 、 build を実行する
+- `npm run typecheck` は `src` (SFC のテンプレートを含む)、`tests`、`vite.config.ts` を型検査します。`npm run build` は従来どおり、型検査を行わずにビルドします。
+- `npm test` では、意図的な型エラーを含む SFC (`tests/fixtures/type-errors`) を vue-tsc が検出できることも確認します。
+- PR と main への push で GitHub Actions の `ci` が lint・typecheck・test・build を実行します。
 
 ## GitHub Pages へのデプロイ
 

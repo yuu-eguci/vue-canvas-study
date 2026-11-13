@@ -7,33 +7,34 @@ import TheCanvas from '../src/components/TheCanvas.vue'
 import HomeView from '../src/views/HomeView.vue'
 import { VAlert } from 'vuetify/components'
 
-const luminance = (hex) => {
+const luminance = (hex: string) => {
   const full = hex.length === 4 ? hex.replace(/\w/g, c => c + c) : hex
-  const [r, g, b] = full.match(/[0-9a-f]{2}/gi).map(v => {
+  const [r, g, b] = full.match(/[0-9a-f]{2}/gi)!.map(v => {
     const c = parseInt(v, 16) / 255
     return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
   })
   return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
 // tonal は文字色を 12% だけ白に重ねた背景になります (ブラウザでの実測値と一致します) 。
-const tonalBackground = (hex) => '#' + hex.match(/[0-9a-f]{2}/gi)
+const tonalBackground = (hex: string) => '#' + hex.match(/[0-9a-f]{2}/gi)!
   .map(v => Math.round(255 - (255 - parseInt(v, 16)) * 0.12).toString(16).padStart(2, '0'))
   .join('')
 
-const contrast = (a, b) => {
+const contrast = (a: string, b: string) => {
   const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x)
   return (hi + 0.05) / (lo + 0.05)
 }
 
 // color prop を背景色と文字色に変換します。 theme の色は on-xxx 、パレットの色は白文字になります。
-const resolve = (name) => {
-  const themeColors = vuetify.theme.current.value.colors
+const resolve = (name: string) => {
+  // このアプリの theme の色はすべて hex 文字列です。
+  const themeColors = vuetify.theme.current.value.colors as Record<string, string>
   if (themeColors[name]) {
     return { background: themeColors[name], text: themeColors[`on-${name}`] }
   }
   const [base, shade] = name.split(/-(?=(?:lighten|darken|accent)-)/)
-  const camel = (s) => s.replace(/-(\w)/g, (_, c) => c.toUpperCase())
-  const palette = colors[camel(base)]
+  const camel = (s: string) => s.replace(/-(\w)/g, (_, c: string) => c.toUpperCase())
+  const palette: Record<string, string> = colors[camel(base) as keyof typeof colors]
   return { background: shade ? palette[camel(shade)] : palette.base, text: '#ffffff' }
 }
 
@@ -45,7 +46,7 @@ describe('ボタンの色', () => {
     const buttons = wrapper.findAllComponents(VBtn).filter(b => b.props('color'))
     expect(buttons.length).toBeGreaterThan(0)
     for (const button of buttons) {
-      const { background, text } = resolve(button.props('color'))
+      const { background, text } = resolve(button.props('color') as string)
       expect(contrast(background, text), `${button.text()} (${button.props('color')})`).toBeGreaterThanOrEqual(4.5)
     }
   })
@@ -54,7 +55,7 @@ describe('ボタンの色', () => {
       global: { stubs: { TheCanvas: true } }
     })
     const alert = wrapper.findComponent(VAlert)
-    const { background: text } = resolve(alert.props('color') ?? alert.props('type'))
+    const { background: text } = resolve((alert.props('color') ?? alert.props('type')) as string)
     expect(contrast(text, tonalBackground(text))).toBeGreaterThanOrEqual(4.5)
   })
 })
