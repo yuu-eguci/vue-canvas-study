@@ -10,13 +10,15 @@
   </v-container>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, type PropType } from 'vue'
+
+export default defineComponent({
   name: 'TheNumberInput',
 
   props: {
     modelValue: {
-      type: Number,
+      type: Number as PropType<number | null>,
       default: null
     }
   },
@@ -28,11 +30,11 @@ export default {
       get () {
         return this.modelValue
       },
-      set (val) {
+      set (val: string | number | null) {
         // 空欄や clear のときは 0 ではなく null を返します。
         this.$emit('update:modelValue', val === '' || val === null ? null : Number(val))
       }
     }
   }
-}
+})
 </script>

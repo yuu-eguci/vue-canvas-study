@@ -1,4 +1,4 @@
-# lint 、 test 、 build を確認します。
+# lint 、 typecheck 、 test 、 build を確認します。
 name: ci
 
 on:
@@ -27,6 +27,8 @@ jobs:
 
     - run: npm run lint
 
+    - run: npm run typecheck
+
     - run: npm test
 
     - run: npm run build
@@ -40,8 +42,10 @@ jobs:
 
     - run: docker compose build
 
-    # NOTE: README の手順どおり compose 経由で lint 、 test 、 build が通ることを確認します。
+    # NOTE: README の手順どおり compose 経由で lint 、 typecheck 、 test 、 build が通ることを確認します。
     - run: docker compose run --rm app npm run lint
+
+    - run: docker compose run --rm app npm run typecheck
 
     - run: docker compose run --rm app npm test
 

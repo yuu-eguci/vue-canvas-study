@@ -13,7 +13,7 @@ describe('HomeView', () => {
     await inputs[0].setValue('3')
     await inputs[1].setValue('abc')
 
-    await wrapper.findAll('button').find(b => b.text().startsWith('Console.log')).trigger('click')
+    await wrapper.findAll('button').find(b => b.text().startsWith('Console.log'))!.trigger('click')
 
     expect(info).toHaveBeenCalledWith({ theNumber: 3, theString: 'abc' })
     info.mockRestore()

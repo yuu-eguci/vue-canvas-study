@@ -52,7 +52,7 @@
           >
             <v-btn
               block
-              @click="$refs.VueCanvasDrawing.undo()"
+              @click="drawingCanvas().undo()"
             >
               Undo
             </v-btn>
@@ -62,7 +62,7 @@
           >
             <v-btn
               block
-              @click="$refs.VueCanvasDrawing.redo()"
+              @click="drawingCanvas().redo()"
             >
               Redo
             </v-btn>
@@ -116,7 +116,8 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import VueDrawingCanvas from 'vue-drawing-canvas'
 import imageA from '@/assets/penta.png'
 import imageB from '@/assets/hexa.png'
@@ -124,7 +125,9 @@ import imageB from '@/assets/hexa.png'
 // vue-drawing-canvas は CSS で縮めると描画座標がずれるため、 canvas 自体のサイズを親の幅に合わせます。
 const MAX_CANVAS_WIDTH = 300
 
-export default {
+type DrawingCanvas = InstanceType<typeof VueDrawingCanvas>
+
+export default defineComponent({
   name: 'TheCanvas',
 
   components: {
@@ -133,7 +136,8 @@ export default {
 
   data: () => ({
     eraser: false,
-    backgroundImage: null,
+    // undefined のときはライブラリの既定値 (null) になり、背景画像なしで描画されます。
+    backgroundImage: undefined as string | undefined,
     canvasWidth: 0
   }),
 
@@ -144,7 +148,7 @@ export default {
   },
 
   mounted () {
-    this.canvasWidth = Math.min(MAX_CANVAS_WIDTH, this.$refs.canvasWrapper.clientWidth)
+    this.canvasWidth = Math.min(MAX_CANVAS_WIDTH, (this.$refs.canvasWrapper as HTMLElement).clientWidth)
     window.addEventListener('keydown', this.onKeydown)
   },
 
@@ -153,8 +157,12 @@ export default {
   },
 
   methods: {
+    drawingCanvas () {
+      return this.$refs.VueCanvasDrawing as DrawingCanvas
+    },
+
     downloadCanvas: function () {
-      const canvas = this.$refs.VueCanvasDrawing.$el
+      const canvas: HTMLCanvasElement = this.drawingCanvas().$el
       const base64 = canvas.toDataURL('image/jpeg')
       const link = document.createElement('a')
       link.href = base64
@@ -162,16 +170,16 @@ export default {
       link.click()
     },
 
-    onKeydown (event) {
+    onKeydown (event: KeyboardEvent) {
       // 入力欄では、入力欄自身の Undo / Redo を優先します。
-      if (!(event.ctrlKey || event.metaKey) || event.target.closest?.('input, textarea')) {
+      if (!(event.ctrlKey || event.metaKey) || (event.target instanceof Element && event.target.closest('input, textarea'))) {
         return
       }
       const key = event.key.toLowerCase()
       if (key === 'z' && !event.shiftKey) {
-        this.$refs.VueCanvasDrawing.undo()
+        this.drawingCanvas().undo()
       } else if ((key === 'y' && event.ctrlKey) || (key === 'z' && event.shiftKey)) {
-        this.$refs.VueCanvasDrawing.redo()
+        this.drawingCanvas().redo()
       } else {
         return
       }
@@ -179,19 +187,19 @@ export default {
     },
 
     onClickResetCanvas: function () {
-      this.backgroundImage = null
-      this.$refs.VueCanvasDrawing.reset()
+      this.backgroundImage = undefined
+      this.drawingCanvas().reset()
     },
 
     onClickSetImageA: function () {
       this.backgroundImage = imageA
-      this.$refs.VueCanvasDrawing.redraw()
+      this.drawingCanvas().redraw(true)
     },
 
     onClickSetImageB: function () {
       this.backgroundImage = imageB
-      this.$refs.VueCanvasDrawing.redraw()
+      this.drawingCanvas().redraw(true)
     }
   }
-}
+})
 </script>
